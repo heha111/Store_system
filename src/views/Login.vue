@@ -63,7 +63,7 @@ export default {
       form: {
         username: '',
         password: '',
-        role: 1
+        role: 'admin'
       },
       rules: {
         username: [
@@ -78,36 +78,29 @@ export default {
   },
   methods: {
     ...mapActions(['login']),
-   
     handleLogin() {
-  this.$refs.loginForm.validate(async (valid) => {
-    if (!valid) return
-    this.loading = true
-    try {
-      // ⭐ Mock 登录：任何账号密码都能登录
-      await new Promise(resolve => setTimeout(resolve, 500))
-      
-      this.$message.success('登录成功（演示模式）')
-      
-      // 存模拟 token
-      localStorage.setItem('token', 'mock-token-' + Date.now())
-      
-      if (this.form.role === 'admin') {
-        this.$router.push('/admin/dashboard')
-      } else {
-        this.$router.push('/user/home')
-      }
-    } catch (err) {
-      this.$message.error('登录失败，请重试')
-    } finally {
-      this.loading = false
+      this.$refs.loginForm.validate(async (valid) => {
+        if (!valid) return
+        this.loading = true
+        try {
+          // Mock 登录：任何账号密码都能登录
+          await new Promise(resolve => setTimeout(resolve, 500))
+          this.$message.success('登录成功（演示模式）')
+          localStorage.setItem('token', 'mock-token-' + Date.now())
+          if (this.form.role === 'admin') {
+            this.$router.push('/admin/dashboard')
+          } else {
+            this.$router.push('/user/home')
+          }
+        } catch (err) {
+          this.$message.error('登录失败，请重试')
+        } finally {
+          this.loading = false
+        }
+      })
     }
-  })
-}
   }
 }
-  
-
 </script>
 
 <style scoped>

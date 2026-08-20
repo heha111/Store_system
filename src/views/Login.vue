@@ -54,8 +54,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
 export default {
   name: 'Login',
   data() {
@@ -77,7 +75,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login']),
     handleLogin() {
       this.$refs.loginForm.validate(async (valid) => {
         if (!valid) return
